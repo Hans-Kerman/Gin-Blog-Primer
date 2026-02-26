@@ -37,4 +37,6 @@ func InitConfig() {
 	if err := viper.Unmarshal(AppConfig); err != nil {
 		log.Fatalf("viper unable to decode struct: %v", err)
 	}
+
+	InitDB()
 }
