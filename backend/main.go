@@ -2,16 +2,18 @@ package main
 
 import (
 	"github.com/Hans-Kerman/GinBlogPrimer/backend/config"
-	"github.com/gin-gonic/gin"
+	"github.com/Hans-Kerman/GinBlogPrimer/backend/router"
 )
 
 func main() {
 	config.InitConfig()
-	r := gin.Default()
-	r.GET("ping", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run(config.AppConfig.App.Port)
+
+	r := router.SetupRouter()
+	port := config.AppConfig.App.Port
+
+	if port == "" {
+		port = ":8080"
+	}
+
+	r.Run(port)
 }
