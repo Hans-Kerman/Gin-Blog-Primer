@@ -1,0 +1,56 @@
+# =========================
+# 1. 通用与系统文件
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+
+# =========================
+# 2. IDE 与编辑器配置文件
+# =========================
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# =========================
+# 3. 后端 (Go) 相关忽略
+# =========================
+# Go 编译出的可执行文件 (假设在 backend 目录下构建)
+backend/main
+backend/main.exe
+backend/__debug_bin
+backend/*.exe
+# 测试生成的覆盖率文件
+backend/*.out
+# 依赖包（如果使用了 vendor 模式）
+backend/vendor/
+# 如果后续你用了课件提到的 Air 热重载工具，忽略其临时文件
+backend/tmp/
+
+# =========================
+# 4. 前端 (Vue/Node) 相关忽略
+# =========================
+# 巨无霸 node_modules
+frontend/node_modules/
+# npm 运行时的日志文件
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+# Vite/Webpack 构建后的生产环境产物
+frontend/dist/
+frontend/dist-ssr/
+# 本地开发缓存
+frontend/.eslintcache
+frontend/node_modules/.cache/
+
+# =========================
+# 5. ⚠️ 极其重要的敏感配置文件
+# =========================
+# 忽略掉真实填有密码的配置文件，防止泄露！
+backend/config/config.yml
+backend/config/config.yaml
+# 如果你用了 .env 文件，也必须忽略
+backend/.env
+backend/.env.local
+frontend/.env.local
