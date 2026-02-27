@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/Hans-Kerman/GinBlogPrimer/backend/global"
 	"github.com/Hans-Kerman/GinBlogPrimer/backend/models"
 	"github.com/Hans-Kerman/GinBlogPrimer/backend/utils"
 	"github.com/gin-gonic/gin"
@@ -39,6 +40,21 @@ func Register(ctx *gin.Context) {
 		)
 		return
 	}
+
+	if err := global.Db.AutoMigrate(&user); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if err := global.Db.Create(&user).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"token": token,
 	})
