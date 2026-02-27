@@ -28,4 +28,18 @@ func Register(ctx *gin.Context) {
 	}
 
 	user.Password = hashedPwd
+
+	token, err := utils.GenerateJWT(user.Username)
+	if err != nil {
+		ctx.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"token": token,
+	})
 }
