@@ -20,6 +20,12 @@ func SetupRouter() *gin.Engine {
 	api.Use(middlewares.AuthMiddleWare())                   //大括号内所有路由需要经过中间件
 	{
 		api.POST("/exchangeRates", controllers.CreateExchangeRate)
+		api.POST("/articles", controllers.CreateArticle)
+		api.GET("/articles", controllers.GetArticles)
+		api.GET("/articles/:id", controllers.GetArticlesByID)
+
+		api.POST("/articles/:id/like", controllers.LikeArticle)
+		api.GET("/articles/:id/like", controllers.GetArticleLikes)
 	}
 	return r
 }
