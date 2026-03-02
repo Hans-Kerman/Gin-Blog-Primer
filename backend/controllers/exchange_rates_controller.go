@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
 	"github.com/Hans-Kerman/GinBlogPrimer/backend/global"
 	"github.com/Hans-Kerman/GinBlogPrimer/backend/models"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func CreateExchangeRate(ctx *gin.Context) {
@@ -42,9 +44,15 @@ func GetExchangeRates(ctx *gin.Context) {
 	var exchangeRates []models.ExchangeRate
 
 	if err := global.Db.Find(&exchangeRates).Error; err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			ctx.JSON(http.StatusNotFound, gin.H{
+				"error": err.Error(),
+			})
+		} else {
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+		}
 		return
 	}
 
