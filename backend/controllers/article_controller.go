@@ -39,6 +39,13 @@ func CreateArticle(ctx *gin.Context) {
 		return
 	}
 
+	if err := global.RedisDB.Del(cacheKey).Err(); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusCreated, article)
 }
 
