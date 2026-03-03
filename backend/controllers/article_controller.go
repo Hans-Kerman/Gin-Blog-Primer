@@ -83,6 +83,8 @@ func GetArticles(ctx *gin.Context) {
 			})
 			return
 		}
+
+		ctx.JSON(http.StatusOK, articles)
 	} else if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
