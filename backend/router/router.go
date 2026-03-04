@@ -1,13 +1,25 @@
 package router
 
 import (
+	"time"
+
 	"github.com/Hans-Kerman/GinBlogPrimer/backend/controllers"
 	"github.com/Hans-Kerman/GinBlogPrimer/backend/middlewares"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter() *gin.Engine {
 	r := gin.New()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173", "http://172.16.76.3:5173"},
+		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour, //预检请求重新检查的间隔
+	}))
 
 	auth := r.Group("/api/auth")
 	{
